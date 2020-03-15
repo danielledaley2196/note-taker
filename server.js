@@ -1,11 +1,15 @@
 // Setting up dependencies
 const path = require("path");
 const express = require("express");
+const fs = require("fs");
 
 // Setting up Express app
 const app = express();
 const PORT = 3000;
 
+// app use
+app.use(express.urlencoded({ extended: true }));
+app.use(express, json());
 app.use(express.static("puclic"));
 
 // routes
