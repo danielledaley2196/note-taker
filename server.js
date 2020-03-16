@@ -9,8 +9,10 @@ const PORT = 3000;
 
 // app use
 app.use(express.urlencoded({ extended: true }));
-app.use(express, json());
 app.use(express.static("puclic"));
+
+// notes .json
+let notesAPI = [{ title: "Test Text", text: "Test Text" }];
 
 // routes
 app.get("/", (req, res) => {
@@ -19,6 +21,24 @@ app.get("/", (req, res) => {
 
 app.get("/notes", (req, res) => {
   return res.sendFile(path.join(__dirname, "notes.html"));
+});
+
+app.get("/api/notes", (req, res) => {
+  res.json(notesAPI);
+});
+
+app.post("/api/notes", (req, res) => {
+  console.log("Posting note to the server!");
+  let newNote = req.body;
+  notesAPI.push(newNote);
+  fs.writeFile("db/db.json", JSON.stringify(notesAPI), err => {
+    if (err) throw err;
+  });
+});
+
+app.delete("/api/notes/:id", (req, res) => {
+  let thisNote = req.body;
+  notesAPI;
 });
 
 // listen function
